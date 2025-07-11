@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-callback',
@@ -12,7 +13,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
   `,
 })
 export class CallbackComponent {
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
     
   ngOnInit(): void{
     const code = this.route.snapshot.queryParamMap.get('code');
@@ -28,6 +29,8 @@ export class CallbackComponent {
       next: (res) => {
         localStorage.setItem('access_token', res.access_token);
         console.log('Access token received:', res.access_token);
+        // Redirect to the dashboard
+        this.router.navigate(['/dashboard']);
       },
       error: (err) => {
         console.error('Error exchanging code for token:', err);
