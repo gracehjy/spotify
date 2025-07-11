@@ -1,5 +1,8 @@
 <main>
-  <h1>Ready to see your Spotify wrapped?</h1> 
+  <div class="logo">
+    <img src="assets/spotify-logo.png" alt="Logo" width="50" height="50">
+    <h1>Ready to see your Spotify wrapped?</h1> 
+  </div>
   <button mat-raised-button color="primary" (click)="login()">Login with Spotify</button>
 </main>
 <style>
@@ -13,6 +16,13 @@
     box-sizing: border-box;
     padding: 2rem;
 
+  }
+  .logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
   }
   button {
     background-color: #1ED760;
