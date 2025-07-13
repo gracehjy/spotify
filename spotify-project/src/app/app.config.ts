@@ -1,9 +1,14 @@
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
-import { routes } from './app.routes';
-import { provideClientHydration } from '@angular/platform-browser';
+import { CallbackComponent } from './callback/callback.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideClientHydration()]
+  providers: [
+    provideRouter([
+      { path: 'callback', component: CallbackComponent },
+      { path: 'dashboard', component: DashboardComponent},
+      { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
+    ])
+  ]
 };

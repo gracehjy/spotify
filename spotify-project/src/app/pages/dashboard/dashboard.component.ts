@@ -15,19 +15,23 @@ export class DashboardComponent {
 
   ngOnInit(): void {
     const token = localStorage.getItem('access_token');
-    console.log('Access token:', token);
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
       this.http.get<any>('https://api.spotify.com/v1/me', { headers }).subscribe({
         next: (response) => {
           this.userName = response.display_name
-          console.log('User name:', this.userName);
+          document.getElementById('welcome-message')!.innerHTML = `Welcome, ${this.userName}!`;
+          
         },
         error: (error) => {
           console.error('Error fetching user data:', error);
-          // Handle error appropriately, e.g., show a message to the user
         }
       });
     }
+  }
+
+  logout(): void {
+    localStorage.removeItem('access_token');
+    window.location.href = 'http://localhost:4200';
   }
 }

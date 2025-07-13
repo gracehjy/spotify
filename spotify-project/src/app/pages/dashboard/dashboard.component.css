@@ -1,0 +1,30 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logout-btn {
+  background-color: #1ED760;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 15px;
+  font-weight: 600;
+  color: #222;
+  cursor: pointer;
+}
+
+main {
+    box-sizing: border-box;
+    padding-left: 6rem;
+    padding-right: 6rem;
+    padding-top: 2rem;
+    overflow-y: auto;
+}

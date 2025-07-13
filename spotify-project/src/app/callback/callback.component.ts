@@ -1,40 +1,37 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-callback',
-  template: `
-    <div>
-      <h1>Callback Component</h1>
-      <p>Processing your login...</p>
-    </div>
-  `,
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './callback.component.html',
 })
 export class CallbackComponent {
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
     
-  ngOnInit(): void{
+  ngOnInit(): void {
+    console.log('CallbackComponent loaded'); // 🧪 this MUST show
     const code = this.route.snapshot.queryParamMap.get('code');
+    console.log('Auth code from Spotify:', code);
     if (code) {
-      this.exchangeCodeForToken(code);
+      console.log('Exchanging code for token...');
+      // send the code to backend to exchange it for an access token
+      this.http.post<any>('http://localhost:3000/auth/token', { code }).subscribe({
+        next: (res) => {
+          console.log('Access token response:', res);
+          localStorage.setItem('access_token', res.access_token);
+          this.router.navigate(['/dashboard']);
+        },
+        error: (err) => {
+          console.error('Error exchanging code for token:', err);
+        }
+      });
     }
-  }
-
-  exchangeCodeForToken(code: string): void {
-    console.log('Exchanging code for token...');
-    // send the code to your backend to exchange it for an access token
-    this.http.post<any>('https://localhost:3000/auth/token', { code }).subscribe({
-      next: (res) => {
-        localStorage.setItem('access_token', res.access_token);
-        console.log('Access token received:', res.access_token);
-        // Redirect to the dashboard
-        this.router.navigate(['/dashboard']);
-      },
-      error: (err) => {
-        console.error('Error exchanging code for token:', err);
-      }
-    });
+    else {
+      console.error('No authorization code found in the URL');
+    }
   }
 }
