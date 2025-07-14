@@ -7,8 +7,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const clientId = '0285ad106d274f4499bd18ce25443809';
-const clientSecret = 'f98f7389ee754847b2e49a6ebd4e8dd8';
+const clientId = process.env.SPOTIFY_CLIENT_ID;
+const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 const redirectUri = 'http://localhost:4200/callback';
 
 app.post('/auth/token', async (req, res) => {

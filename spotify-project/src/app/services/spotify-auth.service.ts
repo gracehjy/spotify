@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class SpotifyAuthService {
-  private clientId = '0285ad106d274f4499bd18ce25443809'; 
+  private clientId = process.env['SPOTIFY_CLIENT_ID'];
   private redirectUri = 'http://localhost:4200/callback';
   private scopes = [
     'user-top-read',
