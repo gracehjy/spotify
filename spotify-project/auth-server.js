@@ -2,6 +2,7 @@ const express = require('express'); // web server framework
 const cors = require('cors'); // allows angular (port 4200) to talk to backend (port 3000)
 const axios = require('axios'); // HTTP client for making requests
 const qs = require('qs'); // query string parser for formatting data in the request body
+require('dotenv').config(); // loads environment variables from .env file
 
 const app = express();
 app.use(cors());
@@ -12,7 +13,6 @@ const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 const redirectUri = 'http://localhost:4200/callback';
 
 app.post('/auth/token', async (req, res) => {
-    console.log('Received token exchange request with body:', req.body);
     const code = req.body.code;
     try {
         

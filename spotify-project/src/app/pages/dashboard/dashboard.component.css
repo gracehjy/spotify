@@ -21,6 +21,11 @@
   cursor: pointer;
 }
 
+.logout-btn:hover {
+    background-color: #1db954;
+    cursor: pointer;
+}
+
 main {
     box-sizing: border-box;
     padding-left: 6rem;
