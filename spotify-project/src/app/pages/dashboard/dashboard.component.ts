@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ViewEncapsulation } from '@angular/core';
 
 
 @Component({
@@ -7,7 +8,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   standalone: true,
   imports: [],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css'
+  styleUrl: './dashboard.component.css',
+  encapsulation: ViewEncapsulation.None
 })
 export class DashboardComponent {
   userName: string = ''; 
@@ -37,7 +39,7 @@ export class DashboardComponent {
       this.http.get<any>('https://api.spotify.com/v1/me/top/artists/?limit=10&time_range=medium_term', { headers }).subscribe({
         next: (response) => {
           console.log('Top Artists:', response.items);
-          document.getElementById('top-artists')!.innerHTML = response.items.map((artist: any) => `<li><img src="${artist.images[0].url}" alt="${artist.name}" width="40" height="40"> ${artist.name}</li>`).join('');
+          document.getElementById('top-artists-list')!.innerHTML = response.items.map((artist: any) => `<li><img src="${artist.images[0].url}" alt="${artist.name}" width="40" height="40"> ${artist.name}</li>`).join('');
         },
         error: (error) => {
           console.error('Error fetching top artists:', error);
@@ -49,7 +51,8 @@ export class DashboardComponent {
       this.http.get<any>('https://api.spotify.com/v1/me/top/tracks/?limit=50&time_range=medium_term', { headers }).subscribe({
         next: (response) => {
           console.log('Top Tracks:', response.items);
-          document.getElementById('top-tracks')!.innerHTML = response.items.map((track: any) => `<li> <img src="${track.album.images[0].url}" alt="${track.name}" width="40" height="40"> ${track.name} - ${track.artists.map((artist: any) => artist.name).join(', ')}</li>`).join('');
+          document.getElementById('top-tracks-list')!.innerHTML = response.items.map((track: any) => `<li> <img src="${track.album.images[0].url}" alt="${track.name}" width="40" height="40"> ${track.name} - ${track.artists.map((artist: any) => artist.name).join(', ')}</li>`).join('');
+
         },
         error: (error) => {
           console.error('Error fetching top tracks:', error);
@@ -58,7 +61,7 @@ export class DashboardComponent {
     }
 
   getTopGenres(headers: HttpHeaders): void {
-      this.http.get<any>('https://api.spotify.com/v1/me/top/artists?limit=10&time_range=medium_term', { headers }).subscribe({
+      this.http.get<any>('https://api.spotify.com/v1/me/top/artists?limit=50&time_range=medium_term', { headers }).subscribe({
         next: (response) => {
           console.log('Top Genres:', response.items);
           const setGenres = new Set<string>();
@@ -67,7 +70,7 @@ export class DashboardComponent {
               setGenres.add(artist.genres[0]);
             }
           });
-          document.getElementById('top-genres')!.innerHTML =  Array.from(setGenres).map(genre => `<li>${genre}</li>`).join('');
+          document.getElementById('top-genres-list')!.innerHTML =  Array.from(setGenres).map(genre => `<li>${genre}</li>`).join('');
       },
         error: (error) => {
           console.error('Error fetching top genres:', error);
