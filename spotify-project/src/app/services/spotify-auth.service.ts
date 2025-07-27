@@ -19,7 +19,7 @@ export class SpotifyAuthService {
       `&redirect_uri=${encodeURIComponent(this.redirectUri)}` +
       `&scope=${encodeURIComponent(this.scopes.join(' '))}`;
 
-    // Redirect the user to the Spotify authorization page
+    // redirect the user to the Spotify authorization page
     window.location.href = authURL;
    }
 }

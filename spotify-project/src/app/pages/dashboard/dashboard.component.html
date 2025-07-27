@@ -2,25 +2,50 @@
     <div class="header">
         <div class="logo">
             <img src="assets/spotify-logo.png" alt="Logo" width="40" height="40">
-            <h2 id="welcome-message"></h2>
+            <h1>Melofy</h1>
         </div>
         <button class="logout-btn" color="primary" (click)="logout()">Logout</button>
     </div>
     <div class="content">
-        <h2>Your Numbers</h2>
-        <p>Visualize your listening activity!</p>
-        <div class="chart-container">
-            <div class="chart" id="top-artists">
-                <h4>Top Artists</h4>
-                <ol id="top-artists-list"></ol>
+        <div class="intro">
+            <h2 id="welcome-message"></h2>
+            <p>Welcome to your personalized dashboard! With Melofy, you can visualize your listening activity and generate playlists tailored to your taste.</p>
+        </div>
+        <div class="container">
+            <h2>Your Numbers</h2>
+            <div class="nav-container">
+                <p>Visualize your listening activity!</p>
+                <div class="pill-nav">
+                    <div class="pill-indicator"></div>
+                    <button id='short-term' class="active" (click)="changeTerm('4 weeks')">4 weeks</button>
+                    <button id='med-term' (click)="changeTerm('6 months')">6 months</button>
+                    <button id='long-term' (click)="changeTerm('1 year')">1 year</button>
+                </div>
             </div>
-            <div class="chart" id="top-tracks">
-                <h4>Top Tracks</h4>
-                <ol id="top-tracks-list"></ol>
+            <div class="chart-container">
+                <div class="chart" id="top-artists">
+                    <h4>Top Artists</h4>
+                    <ol id="top-artists-list"></ol>
+                </div>
+                <div class="chart" id="top-tracks">
+                    <h4>Top Tracks</h4>
+                    <ol id="top-tracks-list"></ol>
+                </div>
+                <div class="chart" id="top-genres">
+                    <h4>Top Genres</h4>
+                    <ol id="top-genres-list"></ol>
+                </div>
             </div>
-            <div class="chart" id="top-genres">
-                <h4>Top Genres</h4>
-                <ol id="top-genres-list"></ol>
+            <div class="playlist-container">
+                <h2>Generate a Playlist</h2>
+                <p>Don’t know what to listen to? Generate a playlist curated to your taste! <b>This will affect your real Spotify account.</b></p>
+                <button id="generate-playlist-btn" class="generate-playlist-btn" (click)="generatePlaylist()">
+                    <span class="spinner" style="display:none;"></span>
+                    <span class="btn-text">Generate Playlist</span>
+                </button>
+                <div class="playlist-info" *ngIf="playlistId">
+                    <p>Playlist created! <b><a [href]="'https://open.spotify.com/playlist/' + playlistId" target="_blank">Listen to your playlist here</a>.</b></p>
+                </div>
             </div>
         </div>
     </div>
